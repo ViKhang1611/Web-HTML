@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cửa Hàng Điện Tử - Mua Sắm Online</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-shopping-bag"></i>
+                <h1>Boss Clear</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Trang Chủ</a></li>
+                    <li><a href="#products">Sản Phẩm</a></li>
+                    <li><a href="#about">Giới Thiệu</a></li>
+                    <li><a href="#contact">Liên Hệ</a></li>
+                </ul>
+            </nav>
+            <div class="cart-icon" onclick="toggleCart()">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Bụi Bay <span class="highlight">Boss Ở Lại</span></h1>
+            <h2>Sạch Tinh Tế – Sống Cùng Thú Cưng</h2>
+            <p>Giải pháp công nghệ hiện đại với mức giá tốt nhất cho bạn</p>
+            <a href="#products" class="btn-primary">Mua Sắm Ngay</a>
+        </div>
+    </section>
+
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <h2 class="section-title">Sản Phẩm Nổi Bật</h2>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Giỏ Hàng</h3>
+            <button class="close-cart" onclick="toggleCart()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="empty-cart">Giỏ hàng trống</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Tổng cộng:</span>
+                <span id="cartTotal">0đ</span>
+            </div>
+            <button class="btn-checkout" onclick="checkout()">Thanh Toán</button>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="toggleCart()"></div>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <!-- Welcome Banner -->
+            <div class="about-welcome">
+                <p class="about-brand">NEBULA TECHNOLOGY</p>
+                <h2 class="about-title">Chào Mừng Đến Với<br>Máy Hút Bụi Nebula Z9</h2>
+                <p class="about-subtitle">Bụi Nebula luôn bắt đầng từ sự đổi mới</p>
+                <button class="btn-learn-more">Tìm hiểu thêm</button>
+            </div>
+
+            <!-- Product Introduction -->
+            <div class="product-intro">
+                <div class="product-intro-text">
+                    <h3>Giới thiệu sản phẩm<br>Nebula Z9</h3>
+                    <p>Máy hút bụi Nebula Z9 là sản phẩm công nghệ tiên tiến, được thiết kế đặc biệt cho các gia đình có thú cưng. Với công suất hút mạnh mẽ 185AW và hệ thống lọc HEPA 5 lớp, Z9 loại bỏ 99.99% bụi bẩn, lông thú cưng và vi khuẩn.</p>
+                    <p>Thiết kế không dây linh hoạt, thời gian hoạt động lên đến 60 phút, cùng màn hình LED thông minh hiển thị trạng thái pin và chế độ làm sạch. Nebula Z9 - Giải pháp hoàn hảo cho ngôi nhà sạch sẽ và khỏe mạnh.</p>
+                </div>
+                <div class="product-intro-image">
+                    <img src="image\Picture1.png" alt="Nebula Z9 trong phòng khách">
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="features-grid">
+                <div class="feature-card feature-card-orange">
+                    <h3>Tính năng nổi bật<br>của Nebula Z9</h3>
+                    <ul>
+                        <li><strong>Lực hút mạnh mẽ 185AW:</strong> Làm sạch sâu mọi bề mặt, từ thảm đến sàn cứng</li>
+                        <li><strong>Pin Li-ion 3000mAh:</strong> Thời gian hoạt động lên đến 60 phút</li>
+                        <li><strong>Hệ thống lọc HEPA 5 lớp:</strong> Loại bỏ 99.99% bụi bẩn và vi khuẩn</li>
+                        <li><strong>Màn hình LED thông minh:</strong> Hiển thị trạng thái pin và chế độ</li>
+                    </ul>
+                </div>
+                <div class="feature-card feature-card-orange">
+                    <h3>Lợi ích khi sử dụng<br>máy hút bụi</h3>
+                    <ul>
+                        <li>Loại bỏ hoàn toàn lông thú cưng và dị ứng nguyên</li>
+                        <li>Tiết kiệm thời gian vệ sinh nhà cửa</li>
+                        <li>Bảo vệ sức khỏe gia đình khỏi bụi bẩn</li>
+                        <li>Thiết kế nhỏ gọn, dễ dàng cất giữ</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 3 Core Features -->
+            <div class="core-features">
+                <h2 class="section-title">3 công năng của Nebula Z9</h2>
+                <div class="core-features-grid">
+                    <div class="core-feature-item">
+                        <img src="image\Picture2.png" alt="Công nghệ hút bụi">
+                        <h4>CÔNG NGHỆ HÚT BỤI</h4>
+                        <p>Mạnh mẽ, vượt trội</p>
+                    </div>
+                    <div class="core-feature-item">
+                        <img src="image\Picture3.png" alt="Thiết kế thông minh">
+                        <h4>THIẾT KẾ THÔNG MINH</h4>
+                        <p>Linh hoạt, tiện lợi</p>
+                    </div>
+                    <div class="core-feature-item">
+                        <img src="image\Picture4.png" alt="Dễ dàng sử dụng">
+                        <h4>DỄ DÀNG SỬ DỤNG</h4>
+                        <p>Nhanh, chuẩn, tiết kiệm</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Why Choose Section -->
+            <div class="why-choose">
+                <div class="why-choose-content">
+                    <h2>Tại sao nên<br>chọn máy<br>hút bụi<br>Nebula Z9?</h2>
+                </div>
+                <div class="why-choose-reasons">
+                    <div class="reason-item">
+                        <h4>Trải nghiệm dùng thử có đảng tặng</h4>
+                        <p>Dùng thử 7 ngày miễn phí, không hài lòng hoàn tiền 100%</p>
+                    </div>
+                    <div class="reason-item">
+                        <h4>Hoàn tiền cho giá điện có thể sử dụng</h4>
+                        <p>Chế độ tiết kiệm điện năng, giảm chi phí vận hành</p>
+                    </div>
+                    <div class="reason-item">
+                        <h4>Giá bán và hậu mãi được ưu đãi</h4>
+                        <p>Bảo hành 24 tháng, hỗ trợ kỹ thuật trọn đời</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand Promise -->
+            <div class="brand-promise">
+                <div class="brand-promise-content">
+                    <p class="brand-name">NEBULA Z9</p>
+                    <h2>Trợ Thủ Đơn<br>Dẹp Bậc Lực<br>Của Bạn</h2>
+                    <p class="brand-description">Nebula Z9 không chỉ là máy hút bụi, mà là người bạn đồng hành đáng tin cậy trong việc chăm sóc ngôi nhà của bạn.</p>
+                    <button class="btn-explore">Khám phá ngay</button>
+                </div>
+                <div class="brand-promise-decoration">
+                    <!-- Decorative elements -->
+                     <img src="image\Picture5.png">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">Khách Hàng Nói Gì Về Chúng Tôi</h2>
+            <p class="testimonials-subtitle">Hơn 10,000+ khách hàng hài lòng trên toàn quốc</p>
+
+            <div class="testimonials-slider">
+                <div class="testimonials-track" id="testimonialsTrack">
+                    <!-- Testimonials will be dynamically loaded here -->
+                </div>
+            </div>
+
+            <div class="testimonials-controls">
+                <button class="testimonial-btn" onclick="previousTestimonial()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="testimonials-dots" id="testimonialsDots"></div>
+                <button class="testimonial-btn" onclick="nextTestimonial()">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2 class="section-title">Liên Hệ</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p>Văn Lang, Bình Thạnh, TP.HCM</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <p>0941 716 342</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <p>thy.207qt57962@vanlanguni.vn</p>
+                    </div>
+                </div>
+                <form class="contact-form" onsubmit="handleContactSubmit(event)">
+                    <input type="text" placeholder="Họ và tên" required>
+                    <input type="email" placeholder="Email" required>
+                    <textarea placeholder="Nội dung" rows="5" required></textarea>
+                    <button type="submit" class="btn-primary">Gửi Tin Nhắn</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Boss Clear. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
