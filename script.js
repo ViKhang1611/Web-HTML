@@ -2,59 +2,59 @@
 const products = [
     {
         id: 1,
-        name: "iPhone 15 Pro Max",
-        description: "Smartphone cao cấp với chip A17 Pro, camera 48MP",
+        name: "Máy hút bụi lau nhà cầm tay Roborock F25",
+        description: "Máy hút bụi lau nhà cầm tay Roborock F25 ghi điểm nhờ vào lực hút 20.000 Pa với chế độ làm sạch linh hoạt, loại bỏ hiệu quả bụi bẩn cả khô lẫn ướt. Thiết kế máy hút bụi cầm tay Roborock nhỏ gọn, với công nghệ JawSraper, ngăn vướng tóc vào cửa hút gấp 4 lần.",
         price: 29990000,
-        image: "https://images.unsplash.com/photo-1696446702183-cbd50c2a8d95?w=500&h=500&fit=crop"
+        image: "..\\WebBanHang\\image\\may-hut-bui-lau-nha-cam-tay-roborock-f25-morph_1_.jpg"
     },
     {
         id: 2,
-        name: "Samsung Galaxy S24 Ultra",
-        description: "Flagship Android với bút S-Pen, màn hình 6.8 inch",
+        name: "MÁY HÚT BỤI CÓ DÂY BOSCH BGS21WPOW 2000W, 2L",
+        description: "Bosch BGS2UPWER1 là máy hút bụi rất được ưa chuộng, máy cung cấp lực hút khỏe với công suất đầu vào 2.500W mạnh mẽ, giúp hút bụi hiệu quả và nhanh chóng.",
         price: 27990000,
-        image: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=500&h=500&fit=crop"
+        image: "..\\WebBanHang\\image\\may-hut-bui-bosch-bgs2upwer1-1_166049245d744f8c850656c9ac784fc5.png"
     },
     {
         id: 3,
-        name: "MacBook Pro M3",
-        description: "Laptop chuyên nghiệp với chip M3, 16GB RAM",
+        name: "Máy hút bụi gia đình HICLEAN HC15P",
+        description: "Máy hút bụi gia đình HICLEAN HC15P là thiết bị vệ sinh hoạt động dựa trên nguyên lý lực hút để thu gom bụi bẩn, tóc rụng, lông thú cưng, mảnh vụn, ... trên sàn nhà, thảm, sofa, chăn ga gối đệm và các bề mặt khác trong không gian sống.",
         price: 45990000,
-        image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&h=500&fit=crop"
+        image: "..\\WebBanHang\\image\\may_hut_bui_hiclean_hc15p_h1.jpg"
     },
     {
         id: 4,
-        name: "iPad Pro 12.9",
-        description: "Máy tính bảng cao cấp với chip M2, màn hình Liquid Retina",
+        name: "Máy hút bụi 25lit 4Hp 3 chức năng Dewalt DXV25S",
+        description: "Máy hút bụi 25lit 4Hp 3 chức năng Dewalt DXV25S là lựa chọn lý tưởng cho những người cần một chiếc máy hút bụi mạnh mẽ và hiệu quả.",
         price: 32990000,
-        image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&h=500&fit=crop"
+        image: "..\\WebBanHang\\image\\may-hut-bui-3-chuc-nang-dewalt-dxv25s-25lit-4hp.jpg"
     },
     {
         id: 5,
-        name: "AirPods Pro 2",
-        description: "Tai nghe không dây với chống ồn chủ động",
+        name: "Máy hút bụi lau nhà ướt khô không dây thế hệ mới lực hút 18000PA Jetzt series H17",
+        description: "Máy hút bụi lau nhà ướt khô không dây thế hệ mới lực hút 18000PA Jetzt series H17 là sản phẩm của hãng máy hút bụi hàng đầu Đức, với thiết kế hiện đại, tiện lợi và hiệu quả.",
         price: 6490000,
-        image: "https://images.unsplash.com/photo-1606841837239-c5a1a4a07af7?w=500&h=500&fit=crop"
+        image: "..\\WebBanHang\\image\\h17 (1).png"
     },
     {
         id: 6,
-        name: "Apple Watch Series 9",
-        description: "Đồng hồ thông minh với cảm biến sức khỏe tiên tiến",
+        name: "Máy hút bụi công nghiệp 30L – Đức Bảo Automart",
+        description: "Máy hút bụi công nghiệp 30L – Đức Bảo Automart là lựa chọn lý tưởng cho những người cần một chiếc máy hút bụi mạnh mẽ và hiệu quả.",
         price: 10990000,
-        image: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=500&h=500&fit=crop"
+        image: "..\\WebBanHang\\image\\may-hut-bui-30-L.jpg"
     },
     {
         id: 7,
-        name: "Sony WH-1000XM5",
-        description: "Tai nghe over-ear với chống ồn hàng đầu",
+        name: "Máy hút bụi gia đình Sumika K20, 1600W, thùng chứa 20L, lọc HEPA",
+        description: "Máy hút bụi gia đình Sumika K20 là lựa chọn lý tưởng cho những người cần một chiếc máy hút bụi mạnh mẽ và hiệu quả.",
         price: 8990000,
-        image: "https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=500&h=500&fit=crop"
+        image: "..\\WebBanHang\\image\\may_hut_bui_gia_dinh_sumika_k20_h3.jpg"
     },
     {
         id: 8,
-        name: "Dell XPS 15",
-        description: "Laptop Windows cao cấp, màn hình 4K OLED",
+        name: "Máy hút bụi Hitachi Nhật Bản CV-BH18 công suất 1800W, xuất xứ Thái Lan",
+        description: "Máy hút bụi Hitachi Nhật Bản CV-BH18 là lựa chọn lý tưởng cho những người cần một chiếc máy hút bụi mạnh mẽ và hiệu quả.",
         price: 42990000,
-        image: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=500&h=500&fit=crop"
+        image: "..\\WebBanHang\\image\\may-hut-bui-hitachi-cv-bh18-24cv-bl-shr-1.jpg"
     }
 ];
 
