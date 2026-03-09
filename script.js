@@ -5,56 +5,56 @@ const products = [
         name: "Máy hút bụi lau nhà cầm tay Roborock F25",
         description: "Máy hút bụi lau nhà cầm tay Roborock F25 ghi điểm nhờ vào lực hút 20.000 Pa với chế độ làm sạch linh hoạt, loại bỏ hiệu quả bụi bẩn cả khô lẫn ướt. Thiết kế máy hút bụi cầm tay Roborock nhỏ gọn, với công nghệ JawSraper, ngăn vướng tóc vào cửa hút gấp 4 lần.",
         price: 29990000,
-        image: "..\\WebBanHang\\image\\may-hut-bui-lau-nha-cam-tay-roborock-f25-morph_1_.jpg"
+        image: "image/may-hut-bui-lau-nha-cam-tay-roborock-f25-morph_1_.jpg"
     },
     {
         id: 2,
         name: "MÁY HÚT BỤI CÓ DÂY BOSCH BGS21WPOW 2000W, 2L",
         description: "Bosch BGS2UPWER1 là máy hút bụi rất được ưa chuộng, máy cung cấp lực hút khỏe với công suất đầu vào 2.500W mạnh mẽ, giúp hút bụi hiệu quả và nhanh chóng.",
         price: 27990000,
-        image: "..\\WebBanHang\\image\\may-hut-bui-bosch-bgs2upwer1-1_166049245d744f8c850656c9ac784fc5.png"
+        image: "image/may-hut-bui-bosch-bgs2upwer1-1_166049245d744f8c850656c9ac784fc5.png"
     },
     {
         id: 3,
         name: "Máy hút bụi gia đình HICLEAN HC15P",
         description: "Máy hút bụi gia đình HICLEAN HC15P là thiết bị vệ sinh hoạt động dựa trên nguyên lý lực hút để thu gom bụi bẩn, tóc rụng, lông thú cưng, mảnh vụn, ... trên sàn nhà, thảm, sofa, chăn ga gối đệm và các bề mặt khác trong không gian sống.",
         price: 45990000,
-        image: "..\\WebBanHang\\image\\may_hut_bui_hiclean_hc15p_h1.jpg"
+        image: "image/may_hut_bui_hiclean_hc15p_h1.jpg"
     },
     {
         id: 4,
         name: "Máy hút bụi 25lit 4Hp 3 chức năng Dewalt DXV25S",
         description: "Máy hút bụi 25lit 4Hp 3 chức năng Dewalt DXV25S là lựa chọn lý tưởng cho những người cần một chiếc máy hút bụi mạnh mẽ và hiệu quả.",
         price: 32990000,
-        image: "..\\WebBanHang\\image\\may-hut-bui-3-chuc-nang-dewalt-dxv25s-25lit-4hp.jpg"
+        image: "image/may-hut-bui-3-chuc-nang-dewalt-dxv25s-25lit-4hp.jpg"
     },
     {
         id: 5,
         name: "Máy hút bụi lau nhà ướt khô không dây thế hệ mới lực hút 18000PA Jetzt series H17",
         description: "Máy hút bụi lau nhà ướt khô không dây thế hệ mới lực hút 18000PA Jetzt series H17 là sản phẩm của hãng máy hút bụi hàng đầu Đức, với thiết kế hiện đại, tiện lợi và hiệu quả.",
         price: 6490000,
-        image: "..\\WebBanHang\\image\\h17 (1).png"
+        image: "image/h17 (1).png"
     },
     {
         id: 6,
         name: "Máy hút bụi công nghiệp 30L – Đức Bảo Automart",
         description: "Máy hút bụi công nghiệp 30L – Đức Bảo Automart là lựa chọn lý tưởng cho những người cần một chiếc máy hút bụi mạnh mẽ và hiệu quả.",
         price: 10990000,
-        image: "..\\WebBanHang\\image\\may-hut-bui-30-L.jpg"
+        image: "image/may-hut-bui-30-L.jpg"
     },
     {
         id: 7,
         name: "Máy hút bụi gia đình Sumika K20, 1600W, thùng chứa 20L, lọc HEPA",
         description: "Máy hút bụi gia đình Sumika K20 là lựa chọn lý tưởng cho những người cần một chiếc máy hút bụi mạnh mẽ và hiệu quả.",
         price: 8990000,
-        image: "..\\WebBanHang\\image\\may_hut_bui_gia_dinh_sumika_k20_h3.jpg"
+        image: "image/may_hut_bui_gia_dinh_sumika_k20_h3.jpg"
     },
     {
         id: 8,
         name: "Máy hút bụi Hitachi Nhật Bản CV-BH18 công suất 1800W, xuất xứ Thái Lan",
         description: "Máy hút bụi Hitachi Nhật Bản CV-BH18 là lựa chọn lý tưởng cho những người cần một chiếc máy hút bụi mạnh mẽ và hiệu quả.",
         price: 42990000,
-        image: "..\\WebBanHang\\image\\may-hut-bui-hitachi-cv-bh18-24cv-bl-shr-1.jpg"
+        image: "image/may-hut-bui-hitachi-cv-bh18-24cv-bl-shr-1.jpg"
     }
 ];
 
