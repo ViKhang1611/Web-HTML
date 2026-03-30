@@ -147,6 +147,30 @@ const testimonials = [
 ];
 
 let currentTestimonialIndex = 0;
+const SHIPPING_FEE = 0;
+const PAYMENT_METHODS = {
+  cod: {
+    label: "Thanh toán khi giao hàng (COD)",
+    usesQRCode: false,
+  },
+  momo: {
+    label: "Thanh toán trực tuyến qua ví MoMo",
+    usesQRCode: true,
+  },
+  vnpay: {
+    label: "Thanh toán trực tuyến qua cổng VNPAY",
+    usesQRCode: true,
+  },
+  fundiin: {
+    label: "Trả sau qua Fundiin",
+    usesQRCode: true,
+  },
+  bank_qr: {
+    label: "Chuyển tài khoản qua QR - Techcombank",
+    usesQRCode: true,
+  },
+};
+let pendingCheckoutOrder = null;
 
 // Initialize
 document.addEventListener("DOMContentLoaded", function () {
@@ -156,6 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
   loadTestimonials();
   startTestimonialAutoSlide();
   initializeProductModal();
+  initializeCheckoutFlow();
 });
 
 // Load Products
@@ -239,7 +264,7 @@ function openProductDetail(productId) {
 
   productModal.classList.add("active");
   productModal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
+  updateBodyScrollLock();
 }
 
 function closeProductDetail() {
@@ -249,7 +274,268 @@ function closeProductDetail() {
 
   productModal.classList.remove("active");
   productModal.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
+  updateBodyScrollLock();
+}
+
+function updateBodyScrollLock() {
+  const hasActiveOverlay = [
+    "cartSidebar",
+    "productModal",
+    "checkoutScreen",
+    "qrScreen",
+  ].some((id) => document.getElementById(id)?.classList.contains("active"));
+
+  document.body.style.overflow = hasActiveOverlay ? "hidden" : "";
+}
+
+function getCartTotal(items = cart) {
+  return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+}
+
+function initializeCheckoutFlow() {
+  const checkoutClose = document.getElementById("checkoutClose");
+  const qrClose = document.getElementById("qrClose");
+  const qrBackButton = document.getElementById("qrBackButton");
+  const qrDoneButton = document.getElementById("qrDoneButton");
+
+  checkoutClose?.addEventListener("click", closeCheckoutPage);
+  qrClose?.addEventListener("click", closeQRPage);
+  qrBackButton?.addEventListener("click", returnToCheckoutFromQR);
+  qrDoneButton?.addEventListener("click", completePayment);
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+
+    if (document.getElementById("qrScreen")?.classList.contains("active")) {
+      closeQRPage();
+      return;
+    }
+
+    if (
+      document.getElementById("checkoutScreen")?.classList.contains("active")
+    ) {
+      closeCheckoutPage();
+    }
+  });
+}
+
+function buildSummaryMarkup(items) {
+  return items
+    .map(
+      (item) => `
+        <div class="summary-item">
+          <img src="${item.image}" alt="${item.name}" class="summary-item-image">
+          <div class="summary-item-info">
+            <p class="summary-item-name">${item.name}</p>
+            <p class="summary-item-meta">Số lượng: ${item.quantity}</p>
+          </div>
+          <div class="summary-item-price">${formatPrice(item.price * item.quantity)}</div>
+        </div>
+      `,
+    )
+    .join("");
+}
+
+function renderCheckoutSummary() {
+  const checkoutSummaryItems = document.getElementById("checkoutSummaryItems");
+  const checkoutSubtotal = document.getElementById("checkoutSubtotal");
+  const checkoutShipping = document.getElementById("checkoutShipping");
+  const checkoutTotal = document.getElementById("checkoutTotal");
+  const total = getCartTotal();
+
+  if (
+    !checkoutSummaryItems ||
+    !checkoutSubtotal ||
+    !checkoutShipping ||
+    !checkoutTotal
+  ) {
+    return;
+  }
+
+  checkoutSummaryItems.innerHTML = buildSummaryMarkup(cart);
+  checkoutSubtotal.textContent = formatPrice(total);
+  checkoutShipping.textContent =
+    SHIPPING_FEE === 0 ? "Miễn phí" : formatPrice(SHIPPING_FEE);
+  checkoutTotal.textContent = formatPrice(total + SHIPPING_FEE);
+}
+
+function renderQRCodePage(order) {
+  const qrCodeImage = document.getElementById("qrCodeImage");
+  const qrOrderCode = document.getElementById("qrOrderCode");
+  const qrReceiverName = document.getElementById("qrReceiverName");
+  const qrReceiverPhone = document.getElementById("qrReceiverPhone");
+  const qrReceiverAddress = document.getElementById("qrReceiverAddress");
+  const qrPaymentTotal = document.getElementById("qrPaymentTotal");
+  const qrPaymentMethod = document.getElementById("qrPaymentMethod");
+  const qrTransferContent = document.getElementById("qrTransferContent");
+  const qrOrderItems = document.getElementById("qrOrderItems");
+
+  if (
+    !qrCodeImage ||
+    !qrOrderCode ||
+    !qrReceiverName ||
+    !qrReceiverPhone ||
+    !qrReceiverAddress ||
+    !qrPaymentTotal ||
+    !qrPaymentMethod ||
+    !qrTransferContent ||
+    !qrOrderItems
+  ) {
+    return;
+  }
+
+  qrCodeImage.src = "image/down.jpg";
+  qrOrderCode.textContent = order.code;
+  qrReceiverName.textContent = order.customer.fullName;
+  qrReceiverPhone.textContent = order.customer.phone;
+  qrReceiverAddress.textContent = `${order.customer.address}, ${order.customer.city}`;
+  qrPaymentMethod.textContent = order.paymentMethodLabel;
+  qrPaymentTotal.textContent = formatPrice(order.total);
+  qrTransferContent.textContent = order.transferContent;
+  qrOrderItems.innerHTML = buildSummaryMarkup(order.items);
+}
+
+function openCheckoutPage() {
+  const checkoutScreen = document.getElementById("checkoutScreen");
+
+  if (!checkoutScreen || cart.length === 0) {
+    alert("Giỏ hàng trống!");
+    return;
+  }
+
+  pendingCheckoutOrder = null;
+  closeCartSidebar();
+  renderCheckoutSummary();
+  checkoutScreen.classList.add("active");
+  checkoutScreen.setAttribute("aria-hidden", "false");
+  updateBodyScrollLock();
+}
+
+function closeCheckoutPage() {
+  const checkoutScreen = document.getElementById("checkoutScreen");
+
+  if (!checkoutScreen) return;
+
+  checkoutScreen.classList.remove("active");
+  checkoutScreen.setAttribute("aria-hidden", "true");
+  updateBodyScrollLock();
+}
+
+function returnToCartFromCheckout() {
+  pendingCheckoutOrder = null;
+  closeCheckoutPage();
+  openCartSidebar();
+}
+
+function handleCheckoutSubmit(event) {
+  event.preventDefault();
+
+  if (cart.length === 0) {
+    alert("Giỏ hàng trống!");
+    closeCheckoutPage();
+    return;
+  }
+
+  const formData = new FormData(event.target);
+  const customer = {
+    fullName: formData.get("fullName")?.toString().trim() || "",
+    phone: formData.get("phone")?.toString().trim() || "",
+    email: formData.get("email")?.toString().trim() || "",
+    city: formData.get("city")?.toString().trim() || "",
+    address: formData.get("address")?.toString().trim() || "",
+    notes: formData.get("notes")?.toString().trim() || "",
+  };
+
+  if (
+    !customer.fullName ||
+    !customer.phone ||
+    !customer.email ||
+    !customer.city ||
+    !customer.address
+  ) {
+    alert("Vui lòng nhập đầy đủ thông tin người nhận.");
+    return;
+  }
+
+  const items = cart.map((item) => ({ ...item }));
+  const subtotal = getCartTotal(items);
+  const total = subtotal + SHIPPING_FEE;
+  const code = `BC${Date.now().toString().slice(-8)}`;
+  const paymentMethod = formData.get("paymentMethod")?.toString() || "bank_qr";
+  const paymentConfig =
+    PAYMENT_METHODS[paymentMethod] || PAYMENT_METHODS.bank_qr;
+
+  pendingCheckoutOrder = {
+    code,
+    customer,
+    items,
+    subtotal,
+    total,
+    paymentMethod,
+    paymentMethodLabel: paymentConfig.label,
+    usesQRCode: paymentConfig.usesQRCode,
+    transferContent: `BOSSCLEAR ${code}`,
+  };
+
+  if (!paymentConfig.usesQRCode) {
+    finalizeOrder(`Đã ghi nhận đơn hàng ${code} - thanh toán khi nhận hàng.`);
+    return;
+  }
+
+  closeCheckoutPage();
+  showQRCode();
+}
+
+function showQRCode() {
+  const qrScreen = document.getElementById("qrScreen");
+
+  if (!qrScreen || !pendingCheckoutOrder) return;
+
+  renderQRCodePage(pendingCheckoutOrder);
+  qrScreen.classList.add("active");
+  qrScreen.setAttribute("aria-hidden", "false");
+  updateBodyScrollLock();
+}
+
+function closeQRPage() {
+  const qrScreen = document.getElementById("qrScreen");
+
+  if (!qrScreen) return;
+
+  qrScreen.classList.remove("active");
+  qrScreen.setAttribute("aria-hidden", "true");
+  updateBodyScrollLock();
+}
+
+function returnToCheckoutFromQR() {
+  closeQRPage();
+  renderCheckoutSummary();
+
+  const checkoutScreen = document.getElementById("checkoutScreen");
+  checkoutScreen?.classList.add("active");
+  checkoutScreen?.setAttribute("aria-hidden", "false");
+  updateBodyScrollLock();
+}
+
+function completePayment() {
+  if (!pendingCheckoutOrder) {
+    closeQRPage();
+    return;
+  }
+
+  finalizeOrder(`Đã ghi nhận thanh toán cho đơn ${pendingCheckoutOrder.code}!`);
+}
+
+function finalizeOrder(message) {
+  cart = [];
+  pendingCheckoutOrder = null;
+  saveCartToStorage();
+  updateCartUI();
+  closeQRPage();
+  closeCheckoutPage();
+  closeCartSidebar();
+  document.getElementById("checkoutForm")?.reset();
+  showNotification(message);
 }
 
 // Format Price
@@ -337,38 +623,45 @@ function updateCartUI() {
   // Update total
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   cartTotal.textContent = formatPrice(total);
+
+  if (document.getElementById("checkoutScreen")?.classList.contains("active")) {
+    renderCheckoutSummary();
+  }
+}
+
+function openCartSidebar() {
+  const cartSidebar = document.getElementById("cartSidebar");
+  const overlay = document.getElementById("overlay");
+
+  cartSidebar?.classList.add("active");
+  overlay?.classList.add("active");
+  updateBodyScrollLock();
+}
+
+function closeCartSidebar() {
+  const cartSidebar = document.getElementById("cartSidebar");
+  const overlay = document.getElementById("overlay");
+
+  cartSidebar?.classList.remove("active");
+  overlay?.classList.remove("active");
+  updateBodyScrollLock();
 }
 
 // Toggle Cart
 function toggleCart() {
   const cartSidebar = document.getElementById("cartSidebar");
-  const overlay = document.getElementById("overlay");
 
-  cartSidebar.classList.toggle("active");
-  overlay.classList.toggle("active");
+  if (cartSidebar?.classList.contains("active")) {
+    closeCartSidebar();
+    return;
+  }
+
+  openCartSidebar();
 }
 
 // Checkout
 function checkout() {
-  if (cart.length === 0) {
-    alert("Giỏ hàng trống!");
-    return;
-  }
-
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const itemsList = cart
-    .map((item) => `${item.name} x${item.quantity}`)
-    .join("\n");
-
-  const message = `Xác nhận đơn hàng:\n\n${itemsList}\n\nTổng cộng: ${formatPrice(total)}\n\nBạn có muốn tiếp tục thanh toán?`;
-
-  if (confirm(message)) {
-    alert("Cảm ơn bạn đã đặt hàng! Chúng tôi sẽ liên hệ với bạn sớm nhất.");
-    cart = [];
-    saveCartToStorage();
-    updateCartUI();
-    toggleCart();
-  }
+  openCheckoutPage();
 }
 
 // Save Cart to LocalStorage
