@@ -1,81 +1,428 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cửa Hàng Điện Tử - Mua Sắm Online</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
     <!-- Header -->
     <header>
-        <div class="container">
-            <div class="logo">
-                <i class="fas fa-shopping-bag"></i>
-                <h1>Boss Clear</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#home">Trang Chủ</a></li>
-                    <li><a href="#products">Sản Phẩm</a></li>
-                    <li><a href="#about">Giới Thiệu</a></li>
-                    <li><a href="#contact">Liên Hệ</a></li>
-                </ul>
-            </nav>
-            <div class="cart-icon" onclick="toggleCart()">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count" id="cartCount">0</span>
-            </div>
+      <div class="container">
+        <div class="logo">
+          <i class="fas fa-shopping-bag"></i>
+          <h1>Boss Clear</h1>
         </div>
+        <nav>
+          <ul>
+            <li><a href="#home">Trang Chủ</a></li>
+            <li><a href="#products">Sản Phẩm</a></li>
+            <li><a href="#about">Giới Thiệu</a></li>
+            <li><a href="#contact">Liên Hệ</a></li>
+          </ul>
+        </nav>
+        <div class="cart-icon" onclick="toggleCart()">
+          <i class="fas fa-shopping-cart"></i>
+          <span class="cart-count" id="cartCount">0</span>
+        </div>
+      </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="hero-content">
-            <h1>Bụi Bay <span class="highlight">Boss Ở Lại</span></h1>
-            <h2>Sạch Tinh Tế – Sống Cùng Thú Cưng</h2>
-            <p>Giải pháp công nghệ hiện đại với mức giá tốt nhất cho bạn</p>
-            <a href="#products" class="btn-primary">Mua Sắm Ngay</a>
-        </div>
+      <div class="hero-content">
+        <h1>Bụi Bay <span class="highlight">Boss Ở Lại</span></h1>
+        <h2>Sạch Tinh Tế – Sống Cùng Thú Cưng</h2>
+        <p>Giải pháp công nghệ hiện đại với mức giá tốt nhất cho bạn</p>
+        <a href="#products" class="btn-primary">Mua Sắm Ngay</a>
+      </div>
     </section>
-
 
     <!-- Products Section -->
     <section class="products-section" id="products">
-        <div class="container">
-            <h2 class="section-title">Sản Phẩm Nổi Bật</h2>
-            <div class="products-grid" id="productsGrid">
-                <!-- Products will be dynamically loaded here -->
-            </div>
+      <div class="container">
+        <h2 class="section-title">Sản Phẩm Nổi Bật</h2>
+        <div class="products-grid" id="productsGrid">
+          <!-- Products will be dynamically loaded here -->
         </div>
+      </div>
     </section>
 
     <!-- Shopping Cart Sidebar -->
     <div class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header">
-            <h3>Giỏ Hàng</h3>
-            <button class="close-cart" onclick="toggleCart()">
-                <i class="fas fa-times"></i>
-            </button>
+      <div class="cart-header">
+        <h3>Giỏ Hàng</h3>
+        <button class="close-cart" onclick="toggleCart()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="cart-items" id="cartItems">
+        <p class="empty-cart">Giỏ hàng trống</p>
+      </div>
+      <div class="cart-footer">
+        <div class="cart-total">
+          <span>Tổng cộng:</span>
+          <span id="cartTotal">0đ</span>
         </div>
-        <div class="cart-items" id="cartItems">
-            <p class="empty-cart">Giỏ hàng trống</p>
-        </div>
-        <div class="cart-footer">
-            <div class="cart-total">
-                <span>Tổng cộng:</span>
-                <span id="cartTotal">0đ</span>
-            </div>
-            <button class="btn-checkout" onclick="checkout()">Thanh Toán</button>
-        </div>
+        <button class="btn-checkout" onclick="checkout()">Thanh Toán</button>
+      </div>
     </div>
 
     <!-- Overlay -->
     <div class="overlay" id="overlay" onclick="toggleCart()"></div>
 
+    <!-- Product Detail Modal -->
+    <div class="product-modal" id="productModal" aria-hidden="true">
+      <div
+        class="product-modal-content"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="productModalTitle"
+      >
+        <button
+          class="product-modal-close"
+          id="productModalClose"
+          aria-label="Đóng chi tiết sản phẩm"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+        <div class="product-modal-body">
+          <img
+            id="productModalImage"
+            class="product-modal-image"
+            src=""
+            alt="Chi tiết sản phẩm"
+          />
+          <div class="product-modal-info">
+            <p class="product-modal-id" id="productModalId"></p>
+            <h3 class="product-modal-title" id="productModalTitle"></h3>
+            <p class="product-modal-price" id="productModalPrice"></p>
+            <p
+              class="product-modal-description"
+              id="productModalDescription"
+            ></p>
+            <div class="product-modal-actions">
+              <button
+                class="btn-add-cart"
+                id="productModalAddToCart"
+                type="button"
+              >
+                <i class="fas fa-cart-plus"></i> Thêm vào giỏ
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checkout Page -->
+    <div class="checkout-page" id="checkoutScreen" aria-hidden="true">
+      <div class="checkout-shell">
+        <div class="checkout-page-header">
+          <div>
+            <p class="checkout-page-kicker">Thanh toán đơn hàng</p>
+            <h3>Thông tin người nhận & đơn hàng</h3>
+          </div>
+          <button
+            class="checkout-page-close"
+            id="checkoutClose"
+            aria-label="Đóng trang thanh toán"
+            type="button"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div class="checkout-page-body">
+          <div class="checkout-form-panel">
+            <form
+              id="checkoutForm"
+              class="checkout-form"
+              onsubmit="handleCheckoutSubmit(event)"
+            >
+              <div class="checkout-form-grid">
+                <div class="checkout-field">
+                  <label for="receiverName">Họ và tên người nhận</label>
+                  <input
+                    id="receiverName"
+                    name="fullName"
+                    type="text"
+                    placeholder="Nguyễn Văn A"
+                    required
+                  />
+                </div>
+                <div class="checkout-field">
+                  <label for="receiverPhone">Số điện thoại</label>
+                  <input
+                    id="receiverPhone"
+                    name="phone"
+                    type="tel"
+                    placeholder="09xx xxx xxx"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="checkout-form-grid">
+                <div class="checkout-field">
+                  <label for="receiverEmail">Email</label>
+                  <input
+                    id="receiverEmail"
+                    name="email"
+                    type="email"
+                    placeholder="email@example.com"
+                    required
+                  />
+                </div>
+                <div class="checkout-field">
+                  <label for="receiverCity">Tỉnh/Thành phố</label>
+                  <input
+                    id="receiverCity"
+                    name="city"
+                    type="text"
+                    placeholder="TP.HCM"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="checkout-field">
+                <label for="receiverAddress">Địa chỉ nhận hàng</label>
+                <input
+                  id="receiverAddress"
+                  name="address"
+                  type="text"
+                  placeholder="Số nhà, tên đường, phường/xã, quận/huyện"
+                  required
+                />
+              </div>
+
+              <div class="checkout-field">
+                <label for="receiverNotes">Ghi chú đơn hàng</label>
+                <textarea
+                  id="receiverNotes"
+                  name="notes"
+                  rows="4"
+                  placeholder="Ví dụ: giao giờ hành chính, gọi trước khi giao..."
+                ></textarea>
+              </div>
+
+              <div class="payment-methods-section">
+                <p class="payment-methods-title">Phương thức thanh toán</p>
+                <div class="payment-methods-list">
+                  <label class="payment-method-option">
+                    <input type="radio" name="paymentMethod" value="cod" />
+                    <span class="payment-method-control"></span>
+                    <span class="payment-method-icon payment-cod">
+                      <i class="fas fa-money-bill-wave"></i>
+                    </span>
+                    <span class="payment-method-text"
+                      >Thanh toán khi giao hàng (COD)</span
+                    >
+                  </label>
+
+                  <label class="payment-method-option">
+                    <input type="radio" name="paymentMethod" value="momo" />
+                    <span class="payment-method-control"></span>
+                    <span class="payment-method-icon payment-logo-box">
+                      <img
+                        class="payment-method-logo"
+                        src="image/momo.png"
+                        alt="MoMo"
+                      />
+                    </span>
+                    <span class="payment-method-text"
+                      >Thanh toán trực tuyến qua ví MoMo</span
+                    >
+                  </label>
+
+                  <label class="payment-method-option">
+                    <input type="radio" name="paymentMethod" value="vnpay" />
+                    <span class="payment-method-control"></span>
+                    <span class="payment-method-icon payment-logo-box">
+                      <img
+                        class="payment-method-logo"
+                        src="image/VNPay.png"
+                        alt="VNPAY"
+                      />
+                    </span>
+                    <span class="payment-method-text"
+                      >Thanh toán trực tuyến qua cổng VNPAY</span
+                    >
+                  </label>
+
+                  <label class="payment-method-option">
+                    <input type="radio" name="paymentMethod" value="fundiin" />
+                    <span class="payment-method-control"></span>
+                    <span class="payment-method-icon payment-logo-box">
+                      <img
+                        class="payment-method-logo"
+                        src="image/Fundiin.png"
+                        alt="Fundiin"
+                      />
+                    </span>
+                    <span class="payment-method-text">Trả sau qua Fundiin</span>
+                  </label>
+
+                  <label class="payment-method-option">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="bank_qr"
+                      checked
+                    />
+                    <span class="payment-method-control"></span>
+                    <span class="payment-method-icon payment-logo-box">
+                      <img
+                        class="payment-method-logo"
+                        src="image/Techcombank.png"
+                        alt="Techcombank"
+                      />
+                    </span>
+                    <span class="payment-method-text"
+                      >Chuyển tài khoản qua QR - Techcombank</span
+                    >
+                  </label>
+                </div>
+                <p class="payment-methods-note">
+                  Các phương thức thanh toán online/chuyển khoản sẽ dùng cùng QR
+                  thanh toán.
+                </p>
+              </div>
+
+              <div class="checkout-page-actions">
+                <button
+                  class="btn-outline"
+                  type="button"
+                  onclick="returnToCartFromCheckout()"
+                >
+                  Quay lại giỏ hàng
+                </button>
+                <button class="btn-checkout-submit" type="submit">
+                  <i class="fas fa-credit-card"></i> Thanh toán
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="checkout-summary-panel">
+            <h4>Thông tin đơn hàng</h4>
+            <div class="checkout-summary-list" id="checkoutSummaryItems"></div>
+
+            <div class="checkout-summary-total">
+              <div class="summary-total-row">
+                <span>Tạm tính</span>
+                <strong id="checkoutSubtotal">0đ</strong>
+              </div>
+              <div class="summary-total-row">
+                <span>Phí vận chuyển</span>
+                <strong id="checkoutShipping">Miễn phí</strong>
+              </div>
+              <div class="summary-total-row grand-total">
+                <span>Tổng thanh toán</span>
+                <strong id="checkoutTotal">0đ</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QR Payment Page -->
+    <div class="qr-page" id="qrScreen" aria-hidden="true">
+      <div class="qr-shell">
+        <div class="checkout-page-header qr-page-header">
+          <div>
+            <p class="checkout-page-kicker">QR thanh toán</p>
+            <h3>Quét mã để hoàn tất đơn hàng</h3>
+          </div>
+          <button
+            class="checkout-page-close"
+            id="qrClose"
+            aria-label="Đóng trang QR"
+            type="button"
+          >
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+
+        <div class="qr-page-body">
+          <div class="qr-code-card">
+            <p class="qr-code-label">Mã QR thanh toán</p>
+            <p class="qr-code-title">Sạp Hoa Chị Thy</p>
+            <p class="qr-code-text">MS00P00000001355416</p>
+            <img
+              id="qrCodeImage"
+              src="image/down.jpg"
+              alt="QR code thanh toán"
+            />
+            <p class="qr-code-label">TECHCOMBANK</p>
+            <p class="qr-code-note">
+              Mở app ngân hàng hoặc ví điện tử để quét mã và nhập đúng nội dung
+              chuyển khoản.
+            </p>
+          </div>
+
+          <div class="qr-order-panel">
+            <div class="qr-order-meta">
+              <div class="qr-meta-item">
+                <span>Mã đơn hàng</span>
+                <strong id="qrOrderCode">---</strong>
+              </div>
+              <div class="qr-meta-item">
+                <span>Người nhận</span>
+                <strong id="qrReceiverName">---</strong>
+              </div>
+              <div class="qr-meta-item">
+                <span>Số điện thoại</span>
+                <strong id="qrReceiverPhone">---</strong>
+              </div>
+              <div class="qr-meta-item">
+                <span>Địa chỉ</span>
+                <strong id="qrReceiverAddress">---</strong>
+              </div>
+            </div>
+
+            <div class="qr-payment-box">
+              <p class="qr-payment-method-label">Phương thức đã chọn</p>
+              <p class="qr-payment-method" id="qrPaymentMethod">
+                Chuyển khoản qua QR
+              </p>
+              <p class="qr-payment-total-label">Tổng cần thanh toán</p>
+              <p class="qr-payment-total" id="qrPaymentTotal">0đ</p>
+              <p class="qr-payment-content">
+                Nội dung CK: <strong id="qrTransferContent">---</strong>
+              </p>
+            </div>
+
+            <h4>Đơn hàng của bạn</h4>
+            <div class="checkout-summary-list compact" id="qrOrderItems"></div>
+
+            <div class="checkout-page-actions qr-page-actions">
+              <button class="btn-outline" id="qrBackButton" type="button">
+                Quay lại thông tin
+              </button>
+              <button
+                class="btn-confirm-payment"
+                id="qrDoneButton"
+                type="button"
+              >
+                <i class="fas fa-check-circle"></i> Tôi đã thanh toán
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- About Section -->
     <section class="about-section" id="about">
+<<<<<<< HEAD
         <div class="container">
             <!-- Welcome Banner -->
             <div class="about-welcome">
@@ -250,75 +597,295 @@
                      <img src="image\Picture5.png">
                 </div>
             </div>
+=======
+      <div class="container">
+        <!-- Welcome Banner -->
+        <div class="about-welcome">
+          <p class="about-brand">NEBULA TECHNOLOGY</p>
+          <h2 class="about-title">
+            Chào Mừng Đến Với<br />Máy Hút Bụi Nebula Series
+          </h2>
+          <p class="about-subtitle">Bụi Nebula luôn bắt đầu từ sự đổi mới</p>
+          <button class="btn-learn-more">Tìm hiểu thêm</button>
+>>>>>>> 6b86ae38f22aef34d0d94e81110a6a9418145b45
         </div>
+
+        <!-- Product Introduction -->
+        <div class="product-intro">
+          <div class="product-intro-text">
+            <h3>Giới thiệu sản phẩm<br />Nebula Series</h3>
+            <p>
+              Nebula Series là dòng sản phẩm máy hút bụi được thiết kế để đáp
+              ứng nhiều nhu cầu vệ sinh khác nhau trong cuộc sống hiện đại. Từ
+              bàn làm việc nhỏ gọn đến toàn bộ không gian gia đình, Nebula mang
+              đến các thiết bị làm sạch mạnh mẽ, tiện lợi và dễ sử dụng.
+            </p>
+            <p>
+              Dòng sản phẩm được phát triển theo triết lý “Clean Smart – Live
+              Better”, kết hợp lực hút mạnh, hệ thống lọc HEPA và thiết kế gọn
+              nhẹ giúp việc dọn dẹp trở nên nhanh chóng và hiệu quả hơn. Các
+              thiết bị vệ sinh thông minh ngày nay đang trở thành xu hướng trong
+              hệ sinh thái nhà thông minh, giúp người dùng tiết kiệm thời gian
+              và nâng cao chất lượng cuộc sống.
+            </p>
+          </div>
+          <div class="product-intro-image">
+            <img src="image\Nebula.png" alt="Nebula Z9 trong phòng khách" />
+          </div>
+        </div>
+
+        <!-- Video Grid -->
+        <div class="video-grid">
+          <div class="video-grid-header">
+            <h3>Video Trải Nghiệm Thực Tế</h3>
+            <p>
+              Xem nhanh cách Nebula Series vận hành trong không gian sống hiện
+              đại
+            </p>
+          </div>
+
+          <div class="video-card">
+            <video
+              class="feature-video"
+              autoplay
+              muted
+              loop
+              controls
+              playsinline
+              preload="auto"
+            >
+              <source
+                src="image/snaptik_7616762540948802824_hd.mp4"
+                type="video/mp4"
+              />
+              Trình duyệt của bạn không hỗ trợ phát video.
+            </video>
+          </div>
+        </div>
+
+        <div class="product-compare">
+          <h3>Nebula Series</h3>
+          <p>So sánh các dòng máy hút bụi từ Z4 đến Z10</p>
+
+          <div class="compare-table">
+            <div class="compare-header">Model</div>
+            <div class="compare-header">Lực hút</div>
+            <div class="compare-header">Pin</div>
+            <div class="compare-header">Bộ lọc</div>
+            <div class="compare-header">Trọng lượng</div>
+            <div class="compare-header">Phù hợp</div>
+
+            <div class="compare-model">Z4</div>
+            <div>6000Pa</div>
+            <div>1200mAh<br />20 phút</div>
+            <div>Lọc bụi mini</div>
+            <div>0.35kg</div>
+            <div>Bàn làm việc</div>
+
+            <div class="compare-model">Z5</div>
+            <div>10000Pa</div>
+            <div>1800mAh<br />25 phút</div>
+            <div>HEPA cơ bản</div>
+            <div>0.65kg</div>
+            <div>Xe hơi / sofa</div>
+
+            <div class="compare-model">Z6</div>
+            <div>150AW</div>
+            <div>2200mAh<br />40 phút</div>
+            <div>HEPA 3 lớp</div>
+            <div>1.3kg</div>
+            <div>Căn hộ nhỏ</div>
+
+            <div class="compare-model">Z7</div>
+            <div>120AW</div>
+            <div>2500mAh<br />45 phút</div>
+            <div>HEPA 3 lớp</div>
+            <div>1.5kg</div>
+            <div>Chải lông thú</div>
+
+            <div class="compare-model">Z8</div>
+            <div>3000Pa</div>
+            <div>2600mAh<br />90 phút</div>
+            <div>HEPA 3 lớp</div>
+            <div>Robot</div>
+            <div>Tự động dọn nhà</div>
+
+            <div class="compare-model">
+              Z9
+              <span class="compare-badge"
+                ><i class="fas fa-fire"></i> Best Seller</span
+              >
+            </div>
+            <div>185AW</div>
+            <div>3000mAh<br />60 phút</div>
+            <div>HEPA 5 lớp</div>
+            <div>1.6kg</div>
+            <div>Gia đình có thú cưng</div>
+
+            <div class="compare-model">Z10</div>
+            <div>220AW</div>
+            <div>3500mAh<br />70 phút</div>
+            <div>HEPA 5 lớp</div>
+            <div>2.0kg</div>
+            <div>Gia đình cao cấp</div>
+          </div>
+        </div>
+
+        <!-- 3 Core Features -->
+        <!-- <div class="core-features">
+          <h2 class="section-title">3 công năng của Nebula Z9</h2>
+          <div class="core-features-grid">
+            <div class="core-feature-item">
+              <img src="image\Picture2.png" alt="Công nghệ hút bụi" />
+              <h4>CÔNG NGHỆ HÚT BỤI</h4>
+              <p>Mạnh mẽ, vượt trội</p>
+            </div>
+            <div class="core-feature-item">
+              <img src="image\Picture3.png" alt="Thiết kế thông minh" />
+              <h4>THIẾT KẾ THÔNG MINH</h4>
+              <p>Linh hoạt, tiện lợi</p>
+            </div>
+            <div class="core-feature-item">
+              <img src="image\Picture4.png" alt="Dễ dàng sử dụng" />
+              <h4>DỄ DÀNG SỬ DỤNG</h4>
+              <p>Nhanh, chuẩn, tiết kiệm</p>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- Why Choose Section -->
+        <div class="why-choose">
+          <div class="why-choose-content">
+            <h2>Tại sao nên<br />chọn máy<br />hút bụi<br />Nebula Series?</h2>
+          </div>
+          <div class="why-choose-reasons">
+            <div class="reason-item">
+              <h4>Trải nghiệm dùng thử có đáng tặng</h4>
+              <p>Dùng thử 7 ngày miễn phí, không hài lòng hoàn tiền 100%</p>
+            </div>
+            <div class="reason-item">
+              <h4>Hoàn tiền cho giá điện có thể sử dụng</h4>
+              <p>Chế độ tiết kiệm điện năng, giảm chi phí vận hành</p>
+            </div>
+            <div class="reason-item">
+              <h4>Giá bán và hậu mãi được ưu đãi</h4>
+              <p>Bảo hành 24 tháng, hỗ trợ kỹ thuật trọn đời</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Brand Promise -->
+        <div class="brand-promise">
+          <div class="brand-promise-content">
+            <p class="brand-name">NEBULA SERIES</p>
+            <h2>Trợ Thủ Dọn Dẹp<br />Mạnh Mẽ Cho<br />Ngôi Nhà Của Bạn</h2>
+            <p class="brand-description">
+              Nebula Series không chỉ là máy hút bụi, mà là người bạn đồng hành
+              đáng tin cậy trong việc chăm sóc ngôi nhà của bạn.
+            </p>
+            <button class="btn-explore">Khám phá ngay</button>
+          </div>
+          <div class="brand-promise-decoration">
+            <!-- Decorative elements -->
+            <img src="image\Picture5.png" />
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Testimonials Section -->
     <section class="testimonials-section">
-        <div class="container">
-            <h2 class="section-title">Khách Hàng Nói Gì Về Chúng Tôi</h2>
-            <p class="testimonials-subtitle">Hơn 10,000+ khách hàng hài lòng trên toàn quốc</p>
+      <div class="container">
+        <h2 class="section-title">Khách Hàng Nói Gì Về Chúng Tôi</h2>
+        <p class="testimonials-subtitle">
+          Hơn 10+ khách hàng hài lòng trên Tp.HCM đã trải nghiệm sản phẩm của
+          chúng tôi
+        </p>
 
-            <div class="testimonials-slider">
-                <div class="testimonials-track" id="testimonialsTrack">
-                    <!-- Testimonials will be dynamically loaded here -->
-                </div>
-            </div>
-
-            <div class="testimonials-controls">
-                <button class="testimonial-btn" onclick="previousTestimonial()">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <div class="testimonials-dots" id="testimonialsDots"></div>
-                <button class="testimonial-btn" onclick="nextTestimonial()">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
+        <div class="testimonials-slider">
+          <div class="testimonials-track" id="testimonialsTrack">
+            <!-- Testimonials will be dynamically loaded here -->
+          </div>
         </div>
+
+        <div class="testimonials-controls">
+          <button class="testimonial-btn" onclick="previousTestimonial()">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div class="testimonials-dots" id="testimonialsDots"></div>
+          <button class="testimonial-btn" onclick="nextTestimonial()">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
     </section>
 
     <!-- Contact Section -->
     <section class="contact-section" id="contact">
-        <div class="container">
-            <h2 class="section-title">Liên Hệ</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>Văn Lang, Bình Thạnh, TP.HCM</p>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone"></i>
-                        <p>0941 716 342</p>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <p>thy.207qt57962@vanlanguni.vn</p>
-                    </div>
-                </div>
-                <form class="contact-form" onsubmit="handleContactSubmit(event)">
-                    <input type="text" placeholder="Họ và tên" required>
-                    <input type="email" placeholder="Email" required>
-                    <textarea placeholder="Nội dung" rows="5" required></textarea>
-                    <button type="submit" class="btn-primary">Gửi Tin Nhắn</button>
-                </form>
+      <div class="container">
+        <h2 class="section-title">Liên Hệ</h2>
+        <div class="contact-content">
+          <div class="contact-info">
+            <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <p>Văn Lang, Bình Thạnh, TP.HCM</p>
             </div>
+            <div class="contact-item">
+              <i class="fas fa-phone"></i>
+              <p>0941 716 342</p>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <p>thy.207qt57962@vanlanguni.vn</p>
+            </div>
+          </div>
+          <form class="contact-form" onsubmit="handleContactSubmit(event)">
+            <input type="text" placeholder="Họ và tên" required />
+            <input type="email" placeholder="Email" required />
+            <textarea placeholder="Nội dung" rows="5" required></textarea>
+            <button type="submit" class="btn-primary">Gửi Tin Nhắn</button>
+          </form>
         </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="container">
-            <p>&copy; 2026 Boss Clear. All rights reserved.</p>
-            <div class="social-links">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-            </div>
+      <div class="container">
+        <p>Website chỉ phục vụ mô phỏng học tập TMĐT, không kinh doanh thực tế.</p>
+        <div class="social-links">
+          <a
+            href="https://www.facebook.com/share/18FVoS3LVC/?mibextid=wwXIfr"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+            ><i class="fab fa-facebook"></i
+          ></a>
+          <a
+            href="https://www.instagram.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a
+            href="https://x.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="X"
+            ><i class="fab fa-twitter"></i
+          ></a>
+          <a
+            href="https://www.tiktok.com/@nguyenvikhang0116?_r=1&_t=ZS-94gddZJstaW"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="TikTok"
+            ><i class="fab fa-tiktok"></i
+          ></a>
         </div>
+      </div>
     </footer>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
-
