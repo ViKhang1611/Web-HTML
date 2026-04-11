@@ -573,8 +573,8 @@ nav a:hover {
 /* Why Choose Section */
 .why-choose {
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 50px;
+    grid-template-columns: 1fr; /* 👈 chỉ 1 cột */
+    gap: 30px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     padding: 60px;
     border-radius: 20px;
@@ -586,6 +586,7 @@ nav a:hover {
     font-size: 3rem;
     line-height: 1.3;
     color: white;
+    text-align: center;
 }
 
 .why-choose-reasons {
@@ -962,14 +963,6 @@ footer {
         grid-template-columns: 1fr;
     }
 
-    .why-choose {
-        grid-template-columns: 1fr;
-        padding: 40px 30px;
-    }
-
-    .why-choose-content h2 {
-        font-size: 2rem;
-    }
 
     .brand-promise {
         grid-template-columns: 1fr;
